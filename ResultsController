@@ -5,7 +5,7 @@ namespace testingPOE.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ResultsController : ControllerBase
-    {
+    { 
         private string GetRole(int userID)
         {
             string role = "";
