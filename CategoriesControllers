@@ -10,7 +10,7 @@ namespace testingPOE.Controllers
         [HttpGet]
         public string getAllCategories()
         {// start of method
-            string message = "no categories found";
+            string message = "no categories found"; 
             try
             {//start of try
                 string string_connection = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;";
