@@ -7,4 +7,4 @@ namespace testingPOE.Model
         public string categoryType { get; set; }
         public string age { get; set; }
     }
-}
+} 
