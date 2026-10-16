@@ -9,7 +9,7 @@ namespace testingPOE.Controllers
         private string GetRole(int userID)
         {
             string role = "";
-            try
+            try 
             {
                 string conn = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;";
                 SqlConnection c = new SqlConnection(conn); c.Open();
