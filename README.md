@@ -103,15 +103,11 @@ GitHub Actions is used to automate the build and testing process. The workflow s
 
 Successful Build Screenshot
 
-Add a screenshot from the GitHub Actions tab showing a successful workflow run with a green check mark.
-
-"[Insert your successful GitHub Actions screenshot here]"
 
 11. Demonstration Video
 
 The demonstration video explains the project structure and shows the API running. It demonstrates the endpoints in Swagger, authentication and unit testing.
 
-YouTube video: [Insert your unlisted YouTube video link here]
 
 12. Conclusion
 
