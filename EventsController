@@ -1,0 +1,132 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
+namespace testingPOE.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EventController : ControllerBase
+    {//start of class
+
+        [HttpGet]
+        public string getAllEvents()
+        {// start of method
+            string message = "no events found";
+            try
+            {//start of try
+                string string_connection = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;";
+                string query = @"select * from Events";
+                SqlConnection connect = new SqlConnection(string_connection);
+                connect.Open();
+                SqlCommand run_query = new SqlCommand(query, connect);
+                SqlDataReader data_found = run_query.ExecuteReader();
+                message = "";
+                while (data_found.Read())
+                {//start of while
+                    message += "EventID: " + data_found["eventID"].ToString() + " Name: " + data_found["EventName"].ToString() + " Date: " + data_found["EventDate"].ToString() + " Location: " + data_found["location"].ToString() + "\n";
+                }//end of while
+                if (message == "") message = "no events found";
+                connect.Close();
+            }//end of try
+            catch (Exception error)
+            {//start of catch
+                message = error.Message;
+            }//end of catch
+            return message;
+        }//end of method
+
+        [HttpGet]
+        [Route("getEvent/{eventID}")]
+        public string getEvent(int eventID)
+        {// start of method
+            string message = "event not found";
+            try
+            {//start of try
+                string string_connection = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;";
+                string query = @"select * from Events where eventID=" + eventID;
+                SqlConnection connect = new SqlConnection(string_connection);
+                connect.Open();
+                SqlCommand run_query = new SqlCommand(query, connect);
+                SqlDataReader data_found = run_query.ExecuteReader();
+                while (data_found.Read())
+                {//start of while
+                    message = "Event: " + data_found["EventName"].ToString() + " Date: " + data_found["EventDate"].ToString();
+                }//end of while
+                connect.Close();
+            }//end of try
+            catch (Exception error)
+            {//start of catch
+                message = error.Message;
+            }//end of catch
+            return message;
+        }//end of method
+
+        [HttpPost]
+        public string addEvent(string name, string eventDate, string location)
+        {// start of method
+            string message = "event not added";
+            try
+            {//start of try
+                string string_connection = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;Trust Server Certificate=True;";
+                string query = @"INSERT INTO Events (eventID, EventName, EventDate, location) VALUES ((SELECT ISNULL(MAX(eventID),0)+1 FROM Events), '" + name + "','" + eventDate + "','" + location + "')";
+                SqlConnection connect = new SqlConnection(string_connection);
+                connect.Open();
+                SqlCommand run_query = new SqlCommand(query, connect);
+                run_query.ExecuteNonQuery();
+                message = "Event Added: " + name;
+                connect.Close();
+            }//end of try
+            catch (Exception error)
+            {//start of catch
+                message = error.Message;
+            }//end of catch
+            return message;
+        }//end of method
+
+        [HttpPut]
+        [Route("updateEvent/{eventID}")]
+        public string updateEvent(int eventID, string name, string eventDate, string location)
+        {// start of method
+            string message = "event not updated";
+            try
+            {//start of try
+                string string_connection = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;Trust Server Certificate=True;";
+                string query = @"UPDATE Events SET EventName='" + name + "', EventDate='" + eventDate + "', location='" + location + "' WHERE eventID=" + eventID;
+                SqlConnection connect = new SqlConnection(string_connection);
+                connect.Open();
+                SqlCommand run_query = new SqlCommand(query, connect);
+                int rows = run_query.ExecuteNonQuery();
+                if (rows > 0) message = "event updated";
+                connect.Close();
+            }//end of try
+            catch (Exception error)
+            {//start of catch
+                message = error.Message;
+            }//end of catch
+            return message;
+        }//end of method
+
+        [HttpDelete]
+        [Route("deleteEvent/{eventID}")]
+        public string deleteEvent(int eventID)
+        {// start of method
+            string message = "event not deleted";
+            try
+            {//start of try
+                string string_connection = @"Data Source=(localdb)\api_endpoint;Initial Catalog=RacingDays;Integrated Security=True;Trust Server Certificate=True;";
+                string query = @"DELETE FROM Events WHERE eventID=" + eventID;
+                SqlConnection connect = new SqlConnection(string_connection);
+                connect.Open();
+                SqlCommand run_query = new SqlCommand(query, connect);
+                int rows = run_query.ExecuteNonQuery();
+                if (rows > 0) message = "event deleted";
+                connect.Close();
+            }//end of try
+            catch (Exception error)
+            {//start of catch
+                message = error.Message;
+            }//end of catch
+            return message;
+        }//end of method
+
+    }//end of class
+}//end of namespace
