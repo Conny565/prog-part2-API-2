@@ -7,6 +7,6 @@ namespace testingPOE.Models
         public int eventID { get; set; }
         public int categoryID { get; set; }
         public string enrolmemtDate { get; set; }
-        public string status { get; set; }
+        public string status { get; set; } 
     }
 }
